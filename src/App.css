@@ -1,3 +1,20 @@
-table#table-heading {
-  object-fit: contain;
+img {
+    vertical-align: middle;
+}
+
+#navbar {
+    background-image: url('Navbar texture.png');
+    background-size: cover;
+}
+
+#searchbar {
+    width: 140px;
+    height: 10px;
+    margin-left: -170px;
+    background: url('searchbar-input.png') repeat-x;
+    border: none;
+}
+
+input:focus {
+    outline:none;
 }
