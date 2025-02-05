@@ -1,2 +1,2 @@
-# furrchat
+# deerchat
 Just a client.
