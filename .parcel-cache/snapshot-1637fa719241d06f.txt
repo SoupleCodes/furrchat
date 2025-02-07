@@ -15,7 +15,7 @@
 45/home/user/furrchat/dist/Profile.372f72ab.png1738951971246175253 0
 57/home/user/furrchat/dist/PatrickHand-Regular.2cee910e.ttf1738951971252175806 0
 37/home/user/furrchat/package-lock.json1738951954607640344 0
-32/home/user/furrchat/package.json1738968626423658354 0
+32/home/user/furrchat/package.json1738969760613024614 0
 59/home/user/furrchat/node_modules/htmlparser2/lib/index.d.ts1738951952893482212 0
 63/home/user/furrchat/node_modules/htmlparser2/lib/Tokenizer.d.ts1738951952874480459 0
 57/home/user/furrchat/node_modules/htmlparser2/lib/index.js1738951952894482304 0
@@ -830,7 +830,7 @@
 64/home/user/furrchat/node_modules/lmdb/dependencies/lz4/lib/lz4.h1738951953776563677 0
 68/home/user/furrchat/node_modules/lmdb/dependencies/lz4/lib/lz4file.c1738951953776563677 0
 68/home/user/furrchat/node_modules/lmdb/dependencies/lz4/lib/README.md1738951953767562846 0
-24/home/user/furrchat/dist1738968838654258089 1
+24/home/user/furrchat/dist1738969792514369448 1
 76/home/user/furrchat/node_modules/lmdb/dependencies/lz4/lib/lz4frame_static.h1738951953782564230 0
 69/home/user/furrchat/node_modules/lmdb/dependencies/lz4/lib/lz4frame.c1738951953781564138 0
 84/home/user/furrchat/node_modules/caniuse-lite/data/features/css-media-interaction.js1738951952095408590 0
@@ -3139,7 +3139,7 @@
 90/home/user/furrchat/node_modules/@parcel/core/test/fixtures/config-node-pipeline/.parcelrc1738951945834831049 0
 86/home/user/furrchat/node_modules/@parcel/core/test/fixtures/config/subfolder/.parcelrc1738951945835831142 0
 81/home/user/furrchat/node_modules/@swc/helpers/cjs/_ts_add_disposable_resource.cjs1738951951825383680 0
-34/home/user/furrchat/dist/home.html1738968838651257869 0
+34/home/user/furrchat/dist/home.html1738969792509369080 0
 71/home/user/furrchat/node_modules/caniuse-lite/data/features/passkeys.js1738951952222420306 0
 66/home/user/furrchat/node_modules/caniuse-lite/dist/lib/statuses.js1738951952482444294 0
 94/home/user/furrchat/node_modules/@parcel/package-manager/test/validateModuleSpecifiers.test.js1738951945886835847 0
