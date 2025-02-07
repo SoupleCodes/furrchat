@@ -16,6 +16,10 @@ body {
   color:steelblue;
 }
 
+.post-attachments img {
+  max-width: 400px;
+}
+
 .post-username {
   color:grey;
   font-style: italic;

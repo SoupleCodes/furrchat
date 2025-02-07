@@ -30,13 +30,19 @@ export function insertPosts() {
       response.messages.forEach((message) => arrayOfPosts.push(message));
       console.log('arrayOfPosts:', arrayOfPosts);
 
-      let html = arrayOfPosts
-      .map((post) => {
-        if (post && typeof post.content === 'string') {
+      let html = arrayOfPosts.map((post) => {
+        if (!post || typeof post.content !== 'string') {
+          return '';
+        }
+        
           const convertedToTimeStamp = new Date(post.created * 1000);
           var message = xss(post.content);
-          const md = MarkdownIt()
+          const md = MarkdownIt();
           message = md.renderInline(message);
+          let attachmentsHtml = '';
+          if (post.attachments && post.attachments.length > 0) {
+              attachmentsHtml = post.attachments.map(attachment => `<img src="${attachment}" />`).join('');
+          }
 
           return `
             <div class="post" id="${post.id}">
@@ -54,6 +60,11 @@ export function insertPosts() {
                   <span class="post-message">: ${message}</span>
                 </div>
                 <div>
+                  <span class="post-attachments">
+                  ${attachmentsHtml}
+                  </span>
+                </div>
+                <div>
                   <a href="">Reply</a>
                   <span class="post-timestamp">
                   &#183;	${convertedToTimeStamp.toLocaleString()}
@@ -61,10 +72,9 @@ export function insertPosts() {
                 </div>
               </div>
             </div>`;
-        } else {
-          return '';
-        }
       })
+      
+
       .join('');
     
     posts.innerHTML = html;    
