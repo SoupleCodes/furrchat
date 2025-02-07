@@ -1,3 +1,5 @@
+import xss from 'xss';
+
 export function insertPosts() {
   const posts = document.getElementById('posts');
   if (!posts) {
@@ -31,7 +33,7 @@ export function insertPosts() {
       .map((post) => {
         if (post && typeof post.content === 'string') {
           const convertedToTimeStamp = new Date(post.created * 1000);
-          const message = filterXSS(post.content);
+          const message = xss(post.content);
 
           return `
             <div class="post" id="${post.id}">

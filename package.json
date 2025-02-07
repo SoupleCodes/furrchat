@@ -1,0 +1,18 @@
+{
+  "name": "furrchat",
+  "version": "1.0.0",
+  "description": "Just a client.",
+  "scripts": {
+    "start": "parcel home.html",
+    "build": "parcel build home.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.13.3"
+  },
+  "dependencies": {
+    "xss": "^1.0.15"
+  }
+}
