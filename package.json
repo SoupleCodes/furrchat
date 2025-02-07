@@ -13,6 +13,7 @@
     "parcel": "^2.13.3"
   },
   "dependencies": {
+    "markdown-it": "^14.1.0",
     "xss": "^1.0.15"
   }
 }

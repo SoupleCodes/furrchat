@@ -1,4 +1,5 @@
 import xss from 'xss';
+import MarkdownIt from 'markdown-it';
 
 export function insertPosts() {
   const posts = document.getElementById('posts');
@@ -33,7 +34,9 @@ export function insertPosts() {
       .map((post) => {
         if (post && typeof post.content === 'string') {
           const convertedToTimeStamp = new Date(post.created * 1000);
-          const message = xss(post.content);
+          var message = xss(post.content);
+          const md = MarkdownIt()
+          message = md.renderInline(message);
 
           return `
             <div class="post" id="${post.id}">
