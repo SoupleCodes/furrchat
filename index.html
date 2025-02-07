@@ -1,28 +1,26 @@
 <!doctype html>
 <html lang="en">
-<head
->
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login</title>
+  <title>Login - DeerChat</title>
   <link href='/style.css' rel='stylesheet'>
 </head>
 <body>
-<div id="login-container"> 
-<h1>Login</h1>
-<form id="login-form" action="home.html" method="post">
-  Username:
-  <br>
-  <input text="" id="username" aria required></input>
-  <br>
-  Password:
-  <br>
-  <input text="" type="password" id="password" aria required></input>
-  <br>
-  <input type="submit" name="Submit!"></input>
-</form>
+  <div id="login-container"> 
+    <h1>Login - DeerChat</h1>
+    <form id="login-form" action="home.html" method="post">
+      Username:
+      <br>
+      <input text="" id="username" aria required></input>
+      <br>
+      Password:
+      <br>
+      <input text="" type="password" id="password" aria required></input>
+      <br>
+      <input type="submit" name="Submit!"></input>
+    </form>
 </div>
-
 <script type="text/javascript">
   const loginContainer = document.getElementById('login-container');
   const token = localStorage.getItem('token'); 
@@ -66,14 +64,9 @@
       }
     };
 
-    ws.onerror = function (error) {
-      console.error("WebSocket error:", error);
-    };
-
-    ws.onclose = function (event) {
-      console.log("WebSocket connection closed:", event);
-    };
-  };
+    ws.onerror = function (error) { console.error("WebSocket error:", error) }
+    ws.onclose = function (event) { console.log("WebSocket connection closed:", event) }
+  }
 </script>
 </body>
 </html>

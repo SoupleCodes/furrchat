@@ -1,20 +1,84 @@
+body {
+  font-family: "Patrick Hand";
+  background-color: #9fb3c7;
+  background-image: url('./assets/notebook.png');
+  margin: 0px;
+}
+
+@font-face { 
+  font-family: "Patrick Hand"; 
+  src: url('assets/PatrickHand-Regular.ttf'); 
+}
+
+
+/* Post CSS */
+.post-displayname a {
+  color:steelblue;
+}
+
 .post-username {
-  font-weight: bold;
+  color:grey;
+  font-style: italic;
+  font-size: small;
 }
 
 .post {
-  background: linear-gradient(to bottom, white 75%, grey 100%);
-  border-radius: 4px;
-  padding: 5px;
-  min-height: 35px;
+  max-width: 720px;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  background-color: aliceblue;
+  box-shadow: 1px 2px 4px grey;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #B8CAC5;
-  background-image: url('./assets/asfalt-light.png');
+.post-profilepicture img {
+  max-width: 50px;
+  margin-right: 4px;
+}
+
+.post-timestamp {
+  color: grey;
+}
+
+/* Navbar */
+#nav-banner {
+  background: repeat-x url('./assets/TornPaper.png');
+  height: 90px;
+  margin: 0px;
+  padding: 10px 19%;
+}
+
+#nav-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#nav-buttons img {
+  filter: brightness(1);
+  transition: filter 0.5s ease;
+}
+
+#nav-buttons img:hover {
+  filter: brightness(1.25);
+}
+
+@media only screen and (max-width: 768px) {
+    #nav-banner {
+        padding: 30px 10px;
+    }
+}
+
+@media only screen and (min-width: 557px) {
+  #trails {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 556px) {
+  #trails {
+    display: none;
+  }
 }

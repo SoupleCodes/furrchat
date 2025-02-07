@@ -3,17 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Posts</title>
+  <title>Posts - DeerChat</title>
   <link href='./style.css' rel='stylesheet'>
 </head>
 <body>
-  <h1>Posts:</h1>
-  <div id="posts">
-
+  <div id="nav">
+      <div id="nav-banner">
+          <div id="nav-content">
+            <img id="logo" src="./assets/Logo.png"/>
+            <img id="trails" src="./assets/Leading trails.png"/>
+              <span id="nav-buttons">
+                <img id="profile" src="./assets/buttons/Profile.png"/>
+                <img id="inbox" src="./assets/buttons/Inbox.png"/>
+                <img id="settings" src="./assets/buttons/Settings.png"/>
+              </span>
+        </div>
+      </div>
+  </div>
+  <div id="content">
+    <div id="reserved">
+      <div class="post">
+      </div>
+    </div>
+  </div>
+    <div id="posts">
+      
+    </div>
   </div>
 <script type="module">
   import { insertPosts } from './post.js';
-    insertPosts();
+  insertPosts();
 </script>
 </body>
 </html>
