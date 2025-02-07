@@ -31,6 +31,8 @@ export function insertPosts() {
       .map((post) => {
         if (post && typeof post.content === 'string') {
           const convertedToTimeStamp = new Date(post.created * 1000);
+          const message = filterXSS(post.content);
+
           return `
             <div class="post" id="${post.id}">
               <div class="post-profilepicture">
@@ -44,7 +46,7 @@ export function insertPosts() {
                     </a>
                     <span class="post-username">(@${post.author.username})</span>
                   </span>
-                  <span class="post-message">: ${post.content}</span>
+                  <span class="post-message">: ${message}</span>
                 </div>
                 <div>
                   <a href="">Reply</a>
