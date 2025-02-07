@@ -4,7 +4,7 @@
   "description": "Just a client.",
   "scripts": {
     "start": "parcel home.html",
-    "build": "parcel build home.html --public-url /deerchat/",
+    "build": "parcel build home.html",
     "deploy": "npm run build && git subtree push --prefix dist origin gh-pages"
 },
   "keywords": [],
@@ -18,3 +18,4 @@
     "xss": "^1.0.15"
   }
 }
+
