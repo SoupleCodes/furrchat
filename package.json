@@ -4,9 +4,9 @@
   "description": "Just a client.",
   "scripts": {
     "start": "parcel home.html",
-    "build": "parcel build home.html",
+    "build": "parcel build index.html home.html",
     "deploy": "npm run build && git subtree push --prefix dist origin gh-pages"
-},
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

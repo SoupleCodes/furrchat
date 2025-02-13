@@ -10,6 +10,33 @@ body {
   src: url('assets/PatrickHand-Regular.ttf'); 
 }
 
+#content {
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 720px;
+  width: 100%;
+  margin: 4px auto;
+}
+
+#post-textarea {
+  width: 100%;
+}
+
+#post-buttons {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+textarea {
+  width: 100%;
+  font-family: "Patrick Hand";
+  resize: vertical;
+}
+
+button {
+  font-family: "Patrick Hand";
+}
 
 /* Post CSS */
 .post-displayname a {

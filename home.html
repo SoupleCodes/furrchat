@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -8,31 +8,120 @@
 </head>
 <body>
   <div id="nav">
-      <div id="nav-banner">
-          <div id="nav-content">
-            <img id="logo" src="assets/Logo.png"/>
-            <img id="trails" src="assets/Leading trails.png"/>
-              <span id="nav-buttons">
-                <img id="profile" src="assets/buttons/Profile.png"/>
-                <img id="inbox" src="assets/buttons/Inbox.png"/>
-                <img id="settings" src="assets/buttons/Settings.png"/>
-              </span>
-        </div>
+    <div id="nav-banner">
+      <div id="nav-content">
+        <img id="logo" src="assets/Logo.png"/>
+        <img id="trails" src="assets/Leading trails.png"/>
+        <span id="nav-buttons">
+          <img id="profile" src="assets/buttons/Profile.png"/>
+          <img id="inbox" src="assets/buttons/Inbox.png"/>
+          <img id="settings" src="assets/buttons/Settings.png"/>
+        </span>
       </div>
+    </div>
   </div>
   <div id="content">
-    <div id="reserved">
-      <div class="post">
-      </div>
+    <div id="post-textarea"><textarea required id="commentbox" name="commentbox" placeholder=" Write Something..."></textarea></div>
+    <div id="post-buttons">
+      <button id="send-button">Post</button>
+      <button>Emojis</button>
     </div>
   </div>
-    <div id="posts">
-      
-    </div>
-  </div>
-<script type="module">
-  import { insertPosts } from './post.js';
-  insertPosts();
-</script>
+  <div id="posts"></div>
+  <script type="module">
+    import { createPost } from './post.js';
+    localStorage.getItem('token')||(window.location.href='index.html');
+    let ws = null;
+
+    function connectToWebSocket(u, p) {
+      ws = new WebSocket('wss://sokt.fraudulent.loan/');
+      ws.onopen = () => {
+        ws.send(JSON.stringify({
+          command:'login_pswd',
+          username:u,
+          password:p,
+          listener:'RegisterLoginPswdListener'
+        }));
+      };
+
+      ws.onmessage = (e) => {
+        try {
+          const r = JSON.parse(e.data);
+          if(r.listener === 'RegisterLoginPswdListener' && !r.error) {
+              localStorage.setItem('token', r.token);
+              const d = JSON.parse(localStorage.getItem('userData')) || {};
+              if (d[r.user.username]) {d[r.user.username].token = r.token;}
+              localStorage.setItem('userData', JSON.stringify(d));
+            } else if(r.command==='greet') {
+              handlePosts(r.messages)
+              r.ulist&&console.log('Received user list:', r.ulist);
+            } else if(r.command==='new_post') {
+              handleNewPost(r.data);
+            } else if(r.command==='ulist') {
+              console.log('Received user list:', r.ulist);
+            } else if(r.error) {
+              console.error('Error:', r.error);
+            } else {
+              console.log('Unknown response:', r);
+            }
+          } catch (e) {
+          console.error('Error parsing JSON:', e);
+        }
+      };
+      ws.onerror = (e) => console.error('WebSocket error:', e);
+      ws.onclose = (e) => console.log('WebSocket connection closed:', e);
+      return ws;
+    }
+
+    function getUserCredentials() {
+      const d = JSON.parse(localStorage.getItem('userData')) || {};
+      const u = Object.keys(d);
+      return u.length ? {username : u[0], password: d[u[0]].password} : null;
+    }
+
+    function handlePosts(posts) {
+        console.log('Posts received:', posts);
+         const postsContainer = document.getElementById('posts');
+         posts.forEach(post => {
+            const postHtml = createPost(post);
+            postsContainer.innerHTML += postHtml;
+        });
+    }
+
+    function handleNewPost(post) {
+        console.log('New post received', post);
+        const postsContainer = document.getElementById('posts');
+        const postHtml = createPost(post);
+        postsContainer.innerHTML = postHtml + postsContainer.innerHTML;
+    }
+
+    function sendPost() {
+      let message = document.getElementById("commentbox").value;
+       if (ws && ws.readyState === WebSocket.OPEN) {
+            const postCommand = JSON.stringify({
+              command: "post",
+              content: message,
+              replies: [],
+              attachments: [],
+            });
+            console.log("Sending post command:", postCommand);
+            ws.send(postCommand);
+          } else {
+            console.error("WebSocket connection is not open.");
+          }
+    }
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+    const sendButton = document.getElementById("send-button");
+    if (sendButton) {
+      sendButton.addEventListener("click", sendPost);
+    } else{
+      console.error("Send button not found.");
+    }
+  });
+
+    const u = getUserCredentials();
+    u ? connectToWebSocket(u.username, u.password) : (console.error('User data not found in localStorage.'), window.location.href = 'index.html');
+  </script>
 </body>
 </html>

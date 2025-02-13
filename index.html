@@ -22,51 +22,58 @@
     </form>
 </div>
 <script type="text/javascript">
-  const loginContainer = document.getElementById('login-container');
-  const token = localStorage.getItem('token'); 
+const loginContainer = document.getElementById('login-container');
+const token = localStorage.getItem('token');
+const storedUserData = JSON.parse(localStorage.getItem('userData')) || {};
+if (token) {
+if (token !== '') {
+    window.location.href = 'home.html';
+     loginContainer.style.display = 'none'; // Hide login form
+   } else {
+     loginContainer.style.display = 'block';
+   }
+ } else {
+   loginContainer.style.display = 'block';
+ }
 
-  if (token) {
-    if (token !== '' ) {
-      window.location.href = 'home.html'; 
-      loginContainer.style.display = 'none'; // Hide login form
-    } else {
-      loginContainer.style.display = 'block';
-    }
-  } else {
-    loginContainer.style.display = 'block'; 
-  }
+ document.getElementById('login-form').onsubmit = function (event) {
+   event.preventDefault();
+   const username = document.getElementById('username').value;
+   const password = document.getElementById('password').value;
 
-  document.getElementById('login-form').onsubmit = function (event) {
-    event.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+   var ws = new WebSocket('wss://sokt.fraudulent.loan/');
 
-    var ws = new WebSocket('wss://sokt.fraudulent.loan/');
+   ws.onopen = () => {
+     ws.send(JSON.stringify({
+       command: "login_pswd",
+       username: username,
+       password: password,
+       listener: "RegisterLoginPswdListener"
+     }));
+   };
 
-    ws.onopen = () => {
-      ws.send(JSON.stringify({
-        command: "login_pswd",
-        username: username,
-        password: password,
-        listener: "RegisterLoginPswdListener"
-      }));
-    };
+   ws.onmessage = function (event) {
+     console.log("Message received:", event.data);
+     const response = JSON.parse(event.data);
 
-    ws.onmessage = function (event) {
-      console.log("Message received:", event.data);
-      const response = JSON.parse(event.data);
+     if (response.token && !response.error) {
+       localStorage.setItem('token', response.token);
+        storedUserData[username] = {
+          password: password,
+          token: response.token
+       };
+       localStorage.setItem('userData', JSON.stringify(storedUserData));
+       ws.close();
+       window.location.href = 'home.html';
+     } else {
+       console.error("Login failed:", response.error);
+     }
+   };
 
-      if (response.token && !response.error) {
-        localStorage.setItem('token', response.token);
-        window.location.href = 'home.html';
-      } else {
-        console.error("Login failed:", response.error); 
-      }
-    };
+   ws.onerror = function (error) { console.error("WebSocket error:", error) }
+   ws.onclose = function (event) { console.log("WebSocket connection closed:", event) }
+ }
 
-    ws.onerror = function (error) { console.error("WebSocket error:", error) }
-    ws.onclose = function (event) { console.log("WebSocket connection closed:", event) }
-  }
 </script>
 </body>
 </html>
