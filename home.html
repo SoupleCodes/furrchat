@@ -121,7 +121,7 @@
   });
 
     const u = getUserCredentials();
-    u ? connectToWebSocket(u.username, u.password) : (console.error('User data not found in localStorage.'), window.location.href = 'index.html');
+    u ? connectToWebSocket(u.username, u.password) : (console.error('User data not found in localStorage.'));
   </script>
 </body>
 </html>
