@@ -10,6 +10,34 @@ body {
   src: url("PatrickHand-Regular.cbe5244b.ttf");
 }
 
+#content {
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  width: 100%;
+  max-width: 720px;
+  margin: 4px auto;
+}
+
+#post-textarea {
+  width: 100%;
+}
+
+#post-buttons {
+  flex-direction: row-reverse;
+  display: flex;
+}
+
+textarea {
+  resize: vertical;
+  width: 100%;
+  font-family: Patrick Hand;
+}
+
+button {
+  font-family: Patrick Hand;
+}
+
 .post-displayname a {
   color: #4682b4;
 }
