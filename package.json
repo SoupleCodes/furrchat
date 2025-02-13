@@ -4,9 +4,10 @@
   "description": "Just a client.",
   "scripts": {
     "start": "parcel home.html",
+    "clean": "rimraf dist",
     "build-index": "parcel build index.html --dist-dir dist --public-url /deerchat",
     "build-home": "parcel build home.html --dist-dir dist --public-url /deerchat",
-    "build": "npm run build-index && npm run build-home",
+    "build": "npm run clean && npm run build-index && npm run build-home",
     "deploy": "npm run build && git subtree push --prefix dist origin gh-pages"
   },
   "keywords": [],
@@ -14,7 +15,7 @@
   "license": "ISC",
   "devDependencies": {
     "parcel": "^2.13.3",
-    "rimraf": "^6.0.1"
+    "rimraf": "^5.0.5"
   },
   "dependencies": {
     "markdown-it": "^14.1.0",
