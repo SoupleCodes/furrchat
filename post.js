@@ -30,7 +30,12 @@ function createPost(post) {
   .replace(/\[\*](.*?)/g, '<li>$1</li>') // list items
   .replace(/\[olist]((?:\[\*].*?)+)\[\/olist]/g, '<ol>$1</ol>') // ordered list
   .replace(/\[h([1-6])](.*?)\[\/h\1]/g, '<h$1>$2</h$1>') // headers
-  .replace(/\[hr\]/g, '<hr>'); // horizontal rule
+  .replace(/\[hr\]/g, '<hr>') // horizontal rule
+  .replace(/([a-z]+:\/\/[^\s]+)/g, match => `<a href="${match}">${match}</a>`) // URLs
+  .replace(/<(a)?:(\w+):(\d+)>/gi, (match, a, name, id) => {
+    const ext = a ? 'gif' : 'webp';
+    return `<img class="emoji" src="https://cdn.discordapp.com/emojis/${id}.${ext}?size=128&quality=lossless" alt="${name}">`;
+  }); // Discord emojis
 
   let attachmentsHtml = '';
   if (post.attachments && post.attachments.length > 0) {
