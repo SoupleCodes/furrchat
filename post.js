@@ -7,11 +7,32 @@ function createPost(post) {
   }
 
   const convertedToTimeStamp = new Date(post.created * 1000);
-  let message = xss(post.content);
+  let message = xss((post.content));
   const md = MarkdownIt();
   message = md.renderInline(message);
-  let attachmentsHtml = '';
+  message = message
+  .replace(/\[b](.*?)\[\/b]/g, '<strong>$1</strong>') // bold
+  .replace(/\[u](.*?)\[\/u]/g, '<u>$1</u>') // underline
+  .replace(/\[s](.*?)\[\/s]/g, '<strike>$1</strike>') // strikethrough
+  .replace(/\[i](.*?)\[\/i]/g, '<em>$1</em>') // italic
+  .replace(/\[marquee](.*?)\[\/marquee]/g, '<marquee>$1</marquee>') // marquee
+  .replace(/\[url=(.*?)](.*?)\[\/url]/g, '<a href="$1">$2</a>') // links
+  .replace(/\[code](.*?)\[\/code]/gs, '<pre><code>$1</code></pre>') // code blocks
+  .replace(/\[rainbow](.*?)\[\/rainbow]/g, '<rainbow>$1</rainbow>') // rainbow text
+  .replace(/\[img](.*?)\[\/img]/g, '<img src="$1" />') // images
+  .replace(/\[size=(.*?)\](.*?)\[\/size]/g, '<span style="font-size: $1;">$2</span>') // font size
+  .replace(/\[color=(.*?)\](.*?)\[\/color]/g, '<span style="color: $1;">$2</span>') // color
+  .replace(/\[center](.*?)\[\/center]/g, '<center>$1</center>') // center
+  .replace(/\[left](.*?)\[\/left]/g, '<p align="left">$1</p>') // left align
+  .replace(/\[right](.*?)\[\/right]/g, '<p align="right">$1</p>') // right align
+  .replace(/\[quote\](.*?)\[\/quote]/g, '<blockquote>$1</blockquote>') // quote
+  .replace(/\[list]((?:\[\*].*?)+)\[\/list]/g, '<ul>$1</ul>') // unordered list
+  .replace(/\[\*](.*?)/g, '<li>$1</li>') // list items
+  .replace(/\[olist]((?:\[\*].*?)+)\[\/olist]/g, '<ol>$1</ol>') // ordered list
+  .replace(/\[h([1-6])](.*?)\[\/h\1]/g, '<h$1>$2</h$1>') // headers
+  .replace(/\[hr\]/g, '<hr>'); // horizontal rule
 
+  let attachmentsHtml = '';
   if (post.attachments && post.attachments.length > 0) {
     attachmentsHtml = post.attachments.map(attachment => `<img src="${attachment}" />`).join('');
   }
@@ -19,7 +40,7 @@ function createPost(post) {
   return `
     <div class="post" id="${post.id}">
       <div class="post-profilepicture">
-        <img src=${post.author.avatar}>
+        <img src=${post.author.avatar || `./assets/default.png`}>
       </div>
       <div>
         <div>

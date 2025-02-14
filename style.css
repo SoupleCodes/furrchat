@@ -5,6 +5,30 @@ body {
   margin: 0px;
 }
 
+rainbow {
+  color: rgba(0, 0, 0, 0.459);
+  background: linear-gradient(to right,
+          red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red);
+  background-size: 500%;
+  animation: rainbow-flow infinite linear 36s;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+blink {
+  animation: blink_keys 1s step-start infinite;
+}
+
+@keyframes rainbow-flow {
+  0% {
+      background-position: 50% 0%;
+  }
+
+  100% {
+      background-position: -200%;
+  }
+}
+
 @font-face { 
   font-family: "Patrick Hand"; 
   src: url('assets/PatrickHand-Regular.ttf'); 
