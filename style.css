@@ -67,6 +67,10 @@ button {
   color:steelblue;
 }
 
+.reply-displayname a {
+  color:rgb(51, 87, 116);
+}
+
 .post-attachments img {
   max-width: 400px;
 }
@@ -85,6 +89,11 @@ button {
   flex-direction: row;
   background-color: aliceblue;
   box-shadow: 1px 2px 4px grey;
+}
+
+.post-replies {
+  color: grey;
+  background-color:rgba(142, 158, 170, 0.187)
 }
 
 .post-profilepicture img {

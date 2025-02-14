@@ -21,7 +21,7 @@ function createPost(post) {
   .replace(/\[rainbow](.*?)\[\/rainbow]/g, '<rainbow>$1</rainbow>') // rainbow text
   .replace(/\[img](.*?)\[\/img]/g, '<img src="$1" />') // images
   .replace(/\[size=(.*?)\](.*?)\[\/size]/g, '<span style="font-size: $1;">$2</span>') // font size
-  .replace(/\[color=(.*?)\](.*?)\[\/color]/g, '<span style="color: $1;">$2</span>') // color
+  .replace(/\[color=((?:[a-zA-Z]+)|(?:#[0-9a-fA-F]{3})|(?:#[0-9a-fA-F]{4})|(?:#[0-9a-fA-F]{6})|(?:#[0-9a-fA-F]{8}))]([^[]+)\[\/color]/g, '<span style="color: $1;">$2</span>') // color
   .replace(/\[center](.*?)\[\/center]/g, '<center>$1</center>') // center
   .replace(/\[left](.*?)\[\/left]/g, '<p align="left">$1</p>') // left align
   .replace(/\[right](.*?)\[\/right]/g, '<p align="right">$1</p>') // right align
@@ -42,6 +42,11 @@ function createPost(post) {
     attachmentsHtml = post.attachments.map(attachment => `<img src="${attachment}" />`).join('');
   }
 
+  let postReplies = '';
+  if (post.replies && post.replies.length > 0) {
+    postReplies = post.replies.map(reply => `<img style="width: 24px" src=${reply.author.avatar || `./assets/default.png`}> <span class="reply-displayname"><a href="">@${reply.author.username}</a></span>: ${reply.content}<br>`).join('');
+  }
+
   return `
     <div class="post" id="${post.id}">
       <div class="post-profilepicture">
@@ -49,6 +54,9 @@ function createPost(post) {
       </div>
       <div>
         <div>
+        <span class="post-replies">
+        ${postReplies}
+        </span>
           <span class="post-displayname">
             <a href="">
             ${post.author.display_name} 
