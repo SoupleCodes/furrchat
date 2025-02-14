@@ -44,11 +44,17 @@ function createPost(post) {
 
   let postReplies = '';
   if (post.replies && post.replies.length > 0) {
-    postReplies = post.replies.map(reply => `<img style="width: 24px" src=${reply.author.avatar || `./assets/default.png`}> <span class="reply-displayname"><a href="">@${reply.author.username}</a></span>: ${reply.content}<br>`).join('');
+    postReplies = post.replies.map(reply => 
+      `<img style="width: 24px" src=${reply.author.avatar || `./assets/default.png`}>
+        <span class="reply-displayname">
+        <a href="">@${reply.author.username}</a>
+        </span>: ${reply.content}
+      <br>`
+    ).join('');
   }
 
   return `
-    <div class="post" id="${post.id}">
+    <div class="post" post_id="${post.id}">
       <div class="post-profilepicture">
         <img src=${post.author.avatar || `./assets/default.png`}>
       </div>
@@ -71,7 +77,7 @@ function createPost(post) {
           </span>
         </div>
         <div>
-          <a href="">Reply</a>
+          <a href="" post_id="${post.id}">Reply</a>
           <span class="post-timestamp">
           &#183;	${convertedToTimeStamp.toLocaleString()}
           </span>

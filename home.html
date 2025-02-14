@@ -22,16 +22,28 @@
   </div>
   <div id="content">
     <div id="post-textarea"><textarea required id="commentbox" name="commentbox" placeholder=" Write Something..."></textarea></div>
-    <div id="post-buttons">
-      <button id="send-button">Post</button>
-      <button>Emojis</button>
-    </div>
+    <div style="display: flex;">
+      <div id="replies_details" style="text-align:center; flex-grow:1;">
+      </div>
+      <div>
+        <button>Emojis</button>
+        <button id="send-button">Post</button>
+      </div>
+    </div>    
   </div>
   <div id="posts"></div>
   <script type="module">
     import { createPost } from './post.js';
     localStorage.getItem('token')||(window.location.href='index.html');
+
     let ws = null;
+    let replies = []
+    let replies_details = document.getElementById('replies_details');
+
+    function clearReplies() {
+      replies = []
+      replies_details.innerHTML = ``
+    }
 
     function connectToWebSocket(u, p) {
       ws = new WebSocket('wss://sokt.fraudulent.loan/');
@@ -80,36 +92,54 @@
     }
 
     function handlePosts(posts) {
-        console.log('Posts received:', posts);
+      console.log(posts)
          const postsContainer = document.getElementById('posts');
          posts.forEach(post => {
             const postHtml = createPost(post);
             postsContainer.innerHTML += postHtml;
         });
+        addReplyLinkEventListeners();
     }
 
     function handleNewPost(post) {
-        console.log('New post received', post);
         const postsContainer = document.getElementById('posts');
         const postHtml = createPost(post);
         postsContainer.innerHTML = postHtml + postsContainer.innerHTML;
+        addReplyLinkEventListeners();
     }
 
     function sendPost() {
-      let message = document.getElementById("commentbox").value;
+      let message = document.getElementById("commentbox");
        if (ws && ws.readyState === WebSocket.OPEN) {
             const postCommand = JSON.stringify({
               command: "post",
-              content: message,
-              replies: [],
+              content: message.value,
+              replies: replies,
               attachments: [],
             });
             console.log("Sending post command:", postCommand);
             ws.send(postCommand);
+            clearReplies();
+            message.value = "";
           } else {
             console.error("WebSocket connection is not open.");
           }
     }
+
+    function addReplyLinkEventListeners() {
+    const replyLinks = document.querySelectorAll('.post a[post_id]');
+    replyLinks.forEach(link => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        const postId = Number(link.getAttribute('post_id'));
+        replies.push(postId)
+
+        replies_details.innerHTML = `${replies.length} Replies - <span class="link" id="clear-replies">Remove All</span>`
+        const removeAll = document.getElementById("clear-replies");
+        removeAll.addEventListener("click", clearReplies);
+      });
+    });
+  }
 
     window.addEventListener('DOMContentLoaded', (event) => {
     const sendButton = document.getElementById("send-button");
