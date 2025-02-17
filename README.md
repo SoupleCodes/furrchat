@@ -1,2 +1,0 @@
-# deerchat
-Just a client.
