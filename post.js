@@ -48,42 +48,45 @@ function createPost(post) {
       `<img style="width: 24px" src=${reply.author.avatar || `./assets/default.png`}>
         <span class="reply-displayname">
         <a href="">@${reply.author.username}</a>
-        </span>: ${reply.content}
+        </span>: ${md.renderInline(xss(reply.content))}
       <br>`
     ).join('');
   }
 
   return `
-    <div class="post" post_id="${post.id}">
-      <div class="post-profilepicture">
-        <img src=${post.author.avatar || `./assets/default.png`}>
-      </div>
+  <div class="post" post_id="${post.id}">
+    <div class="post-profilepicture">
+      <img src=${post.author.avatar || `./assets/default.png`}>
+    </div>
+    <div>
       <div>
-        <div>
         <span class="post-replies">
         ${postReplies}
         </span>
-          <span class="post-displayname">
-            <a href="">
+        <span class="post-displayname">
+          <a class="profile-link" href="/profile?user=${post.author.username}">
             ${post.author.display_name} 
-            </a>
-            <span class="post-username">(@${post.author.username})</span>
+          </a>
+          <span class="post-username">
+            (@${post.author.username})
           </span>
-          <span class="post-message">: ${message}</span>
-        </div>
-        <div>
-          <span class="post-attachments">
-          ${attachmentsHtml}
-          </span>
-        </div>
-        <div>
-          <a href="" post_id="${post.id}">Reply</a>
-          <span class="post-timestamp">
-          &#183;	${convertedToTimeStamp.toLocaleString()}
-          </span>
-        </div>
+        </span>
+        <span class="post-message">: ${message}</span>
       </div>
-    </div>`;
+      <div>
+        <span class="post-attachments">
+        ${attachmentsHtml}
+        </span>
+      </div>
+      <div>
+        <a post_id="${post.id}" class="reply-link">Reply</a>
+        <span class="post-timestamp">
+        &#183;	${convertedToTimeStamp.toLocaleString()}
+        </span>
+      </div>
+    </div>
+  </div>`
+  ;
 }
 
 export { createPost };

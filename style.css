@@ -15,6 +15,14 @@ rainbow {
   background-clip: text;
 }
 
+.page {
+  display: none;
+}
+
+.active {
+  display: block;
+}
+
 blink {
   animation: blink_keys 1s step-start infinite;
 }
@@ -44,6 +52,7 @@ blink {
   max-width: 720px;
   width: 100%;
   margin: 4px auto;
+  padding-top: 1em;
 }
 
 #post-textarea {
@@ -60,7 +69,18 @@ button {
   font-family: "Patrick Hand";
 }
 
-/* Post CSS */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0px;
+}
+
+/* Profile Page */
+#profile-pic img {
+  max-width: 250px;
+  height: auto;
+  padding-right: 10px;
+}
+
+/* Post */
 .post-displayname a {
   color:steelblue;
 }
@@ -79,6 +99,11 @@ button {
   font-size: small;
 }
 
+.post-message {
+  padding-right: 12px;
+  word-break: break-word;
+}
+
 .post {
   max-width: 720px;
   width: 100%;
@@ -91,7 +116,8 @@ button {
 
 .post-replies {
   color: grey;
-  background-color:rgba(142, 158, 170, 0.187)
+  background-color:rgba(142, 158, 170, 0.187);
+  word-break: break-word;
 }
 
 .post-profilepicture img {
